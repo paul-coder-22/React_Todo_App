@@ -7,7 +7,7 @@ function MainHeader({ onCreatePost }) {
         <header className={classes.header}>
             <h1 className={classes.logo}>
                 <MdMessage />
-                React Poster
+                React App
             </h1>
             <p>
                 <button className={classes.button} onClick={onCreatePost}>

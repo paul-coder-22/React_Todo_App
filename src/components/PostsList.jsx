@@ -7,15 +7,16 @@ import classes from './PostsList.module.css';
 
 function PostsList({ isPosting, hideModal }) {
 
-
-
   const [posts, setPost] = useState([])
+  const [isFetching, setIsfetching] = useState(false)
 
   useEffect(() => {
     async function fetchPosts() {
+      setIsfetching(true)
       const response = await fetch('http://localhost:8080/posts')
       const resData = await response.json()
       setPost(resData.posts)
+      setIsfetching(false)
     }
     fetchPosts()
   }, [])
@@ -47,7 +48,8 @@ function PostsList({ isPosting, hideModal }) {
           : null
       }
       <ul className={classes.posts}>
-        <Post author="Paul" body="Get the Best out of yourself,everytime." />
+        {/* <Post author="Paul" body="Get the Best out of yourself,everytime." /> */}
+
         {
           posts.map(e => <Post key={e} author={e.author} body={e.body} />)
         }
