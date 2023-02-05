@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Posts, { loader as posterLoaders } from './routes/Posts'
 import NewPost, { action as newPostAction } from './routes/NewPost'
+import PostDetails, { loader as postDetails } from './routes/PostDetails'
 import './index.css'
 import RootLayout from './Routes/RootLayout'
 
@@ -15,7 +16,8 @@ const router = createBrowserRouter([
         element: <Posts />,
         loader: posterLoaders,
         children: [
-          { path: '/new-post', element: <NewPost />, action: newPostAction }
+          { path: '/new-post', element: <NewPost />, action: newPostAction },
+          { path: '/:id', element: <PostDetails />, loader: postDetails }
         ]
       },
     ]
@@ -25,6 +27,5 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <RouterProvider router={router} />
-
   </React.StrictMode>
 )
