@@ -1,26 +1,12 @@
-import { useEffect, useState } from 'react';
 
 import Post from './Post';
-import NewPost from './NewPost';
+import NewPost from '../routes/NewPost';
 import Modal from './Modal';
 import classes from './PostsList.module.css';
+import { useLoaderData } from 'react-router-dom';
 
-function PostsList({ isPosting, hideModal }) {
-
-  const [posts, setPost] = useState([])
-  const [isFetching, setIsfetching] = useState(false)
-
-  useEffect(() => {
-    async function fetchPosts() {
-      setIsfetching(true)
-      const response = await fetch('http://localhost:8080/posts')
-      const resData = await response.json()
-      setPost(resData.posts)
-      setIsfetching(false)
-    }
-    fetchPosts()
-  }, [])
-
+function PostsList() {
+  const posts = useLoaderData()
 
   function addPostHandler(postData) {
     fetch('http://localhost:8080/posts', {
@@ -30,30 +16,22 @@ function PostsList({ isPosting, hideModal }) {
         'Content-Type': 'application/json'
       }
     })
-    setPost([postData, ...posts])
-    console.log(posts);
+    // setPost([postData, ...posts])
   }
+
 
 
   return (
     <>
-      {
-        isPosting ?
-          <Modal onClose={hideModal}>
-            <NewPost
-              onAddPost={addPostHandler}
-              onCancel={hideModal}
-            />
-          </Modal>
-          : null
-      }
+
+
       <ul className={classes.posts}>
         {/* <Post author="Paul" body="Get the Best out of yourself,everytime." /> */}
-
-        {
-          posts.map(e => <Post key={e} author={e.author} body={e.body} />)
-        }
+        {posts.map(e => <Post key={e.body} author={e.author} body={e.body} />)}
       </ul>
+
+
+
     </>
   );
 }
